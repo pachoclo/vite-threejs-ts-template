@@ -37,10 +37,8 @@ function main() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
 
   function renderLoop(time: DOMHighResTimeStamp) {
-    time *= 0.001 // to secs
-
     // animation goes here
-    console.log('camera: ', camera.position)
+    mesh.rotateY(time % (Math.PI / 200))
 
     // responsiveness
     if (resizeRendererToDisplaySize(renderer)) {
