@@ -16,6 +16,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as animations from './animations'
 import { resizeRendererToDisplaySize } from './helpers/responsiveness'
 import './style.css'
+import Stats from 'three/examples/jsm/libs/stats.module'
 
 const CANVAS_ID = 'scene'
 
@@ -50,6 +51,8 @@ const clock = new Clock()
 
 const scene = new Scene()
 
+const stats = Stats()
+
 init()
 
 animate()
@@ -82,10 +85,15 @@ function init() {
   const { x: ctrlTargetX, y: ctrlTargetY, z: ctrlTargetZ } = cube.position
   cameraControls.target.set(ctrlTargetX, ctrlTargetY, ctrlTargetZ)
   cameraControls.update()
+
+  // stats
+  document.body.appendChild(stats.dom)
 }
 
 function animate() {
   requestAnimationFrame(animate)
+
+  stats.update()
 
   // animation
   animations.rotate(cube, clock, Math.PI / 3)
