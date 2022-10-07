@@ -1,5 +1,7 @@
 # Three.js Vite Template with TypeScript
 
+<a class="github-button" href="https://github.com/buttons/github-buttons/generate" data-size="large" aria-label="Use this template buttons/github-buttons on GitHub">Use this template</a>
+
 No UI framework Three.js starter with the essentials.
 
 - [Demo](https://vite-threejs-ts-template.vercel.app/)
