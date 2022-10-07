@@ -35,6 +35,7 @@ function main() {
   controls.update()
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
+  renderer.setPixelRatio(window.devicePixelRatio)
 
   function renderLoop(time: DOMHighResTimeStamp) {
     // animation goes here
