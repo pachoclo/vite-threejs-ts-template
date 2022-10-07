@@ -1,6 +1,3 @@
-import './style.css'
-import { resizeRendererToDisplaySize } from './helpers/responsiveness'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import {
   AmbientLight,
   BoxGeometry,
@@ -8,23 +5,37 @@ import {
   GridHelper,
   Mesh,
   MeshLambertMaterial,
+  PCFSoftShadowMap,
   PerspectiveCamera,
+  PlaneGeometry,
   PointLight,
   Scene,
   WebGLRenderer,
 } from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import * as animations from './animations'
+import { resizeRendererToDisplaySize } from './helpers/responsiveness'
+import './style.css'
 
 const CANVAS_ID = 'scene'
-const MESH_INIT_POSITION = [0, 0.5, 0] as const
 
-const geometry = new BoxGeometry(1, 1, 1)
-const material = new MeshLambertMaterial({ color: 'magenta' })
-const mesh = new Mesh(geometry, material)
+const cubeGeometry = new BoxGeometry(1, 1, 1)
+const cubeMaterial = new MeshLambertMaterial({ color: 'magenta' })
+const cube = new Mesh(cubeGeometry, cubeMaterial)
+
+const planeGeometry = new PlaneGeometry(3, 3)
+const planeMaterial = new MeshLambertMaterial({
+  color: 'gray',
+  emissive: 'teal',
+  emissiveIntensity: 0.2,
+  side: 2,
+})
+const plane = new Mesh(planeGeometry, planeMaterial)
 
 const grid = new GridHelper(20, 20, 'teal', 'darkgray')
 
 const ambientLight = new AmbientLight('white', 0.4)
-const pointLight = new PointLight(0xff0000, 1.5, 100)
+const pointLight = new PointLight('blue-green', 1.5, 100)
 
 const camera = new PerspectiveCamera(50, 2, 0.1, 200)
 
@@ -34,6 +45,8 @@ const cameraControls = new OrbitControls(camera, canvas)
 
 const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true })
 renderer.setPixelRatio(window.devicePixelRatio)
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = PCFSoftShadowMap
 
 const clock = new Clock()
 
@@ -44,16 +57,27 @@ init()
 animate()
 
 function init() {
-  mesh.position.set(...MESH_INIT_POSITION)
+  // position and rotation
+  camera.position.set(3.5, 3, 5)
+  plane.rotateX(Math.PI / 2)
   pointLight.position.set(-5, 3, 3)
-  camera.position.set(3.5, 3, 3)
+
+  // shadows
+  cube.castShadow = true
+  plane.receiveShadow = true
+  pointLight.castShadow = true
+  pointLight.shadow.radius = 4
+  pointLight.shadow.camera.near = 0.1
+  pointLight.shadow.mapSize.width = 5000
+  pointLight.shadow.mapSize.height = 5000
 
   scene.add(grid)
-  scene.add(mesh)
+  scene.add(plane)
+  scene.add(cube)
   scene.add(ambientLight)
   scene.add(pointLight)
 
-  const { x: ctrlTargetX, y: ctrlTargetY, z: ctrlTargetZ } = mesh.position
+  const { x: ctrlTargetX, y: ctrlTargetY, z: ctrlTargetZ } = cube.position
   cameraControls.target.set(ctrlTargetX, ctrlTargetY, ctrlTargetZ)
   cameraControls.update()
 }
@@ -62,8 +86,8 @@ function animate() {
   requestAnimationFrame(animate)
 
   // animation
-  const rotationAngle = clock.getDelta() * (Math.PI / 2) // 90 degrees per second
-  mesh.rotateY(rotationAngle)
+  animations.rotate(cube, clock, Math.PI / 3)
+  animations.bounce(cube, clock, 1, 0.5, 0.5)
 
   // responsiveness
   if (resizeRendererToDisplaySize(renderer)) {
