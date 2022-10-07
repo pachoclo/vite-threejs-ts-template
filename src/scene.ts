@@ -45,8 +45,6 @@ const cameraControls = new OrbitControls(camera, canvas)
 
 const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true })
 renderer.setPixelRatio(window.devicePixelRatio)
-renderer.shadowMap.enabled = true
-renderer.shadowMap.type = PCFSoftShadowMap
 
 const clock = new Clock()
 
@@ -63,20 +61,24 @@ function init() {
   pointLight.position.set(-5, 3, 3)
 
   // shadows
-  cube.castShadow = true
-  plane.receiveShadow = true
+  renderer.shadowMap.enabled = true
+  renderer.shadowMap.type = PCFSoftShadowMap
   pointLight.castShadow = true
   pointLight.shadow.radius = 4
   pointLight.shadow.camera.near = 0.1
   pointLight.shadow.mapSize.width = 5000
   pointLight.shadow.mapSize.height = 5000
+  cube.castShadow = true
+  plane.receiveShadow = true
 
+  // add objects and lights to scene
   scene.add(grid)
   scene.add(plane)
   scene.add(cube)
   scene.add(ambientLight)
   scene.add(pointLight)
 
+  // set the camera to look at the cube's starting position
   const { x: ctrlTargetX, y: ctrlTargetY, z: ctrlTargetZ } = cube.position
   cameraControls.target.set(ctrlTargetX, ctrlTargetY, ctrlTargetZ)
   cameraControls.update()
