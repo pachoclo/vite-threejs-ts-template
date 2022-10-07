@@ -35,7 +35,7 @@ const plane = new Mesh(planeGeometry, planeMaterial)
 const grid = new GridHelper(20, 20, 'teal', 'darkgray')
 
 const ambientLight = new AmbientLight('white', 0.4)
-const pointLight = new PointLight('blue-green', 1.5, 100)
+const pointLight = new PointLight('#ffdca8', 1.2, 100)
 
 const camera = new PerspectiveCamera(50, 2, 0.1, 200)
 
