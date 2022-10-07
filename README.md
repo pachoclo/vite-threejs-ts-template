@@ -21,11 +21,12 @@ No UI framework Three.js starter with the essentials.
 - [x] Renderer (WebGL)
 - [x] Orbit Controls
 - [x] Grid
-- [x] Render Loop
-- [x] Basic keyboard controls for the mesh
 - [x] Antialias enabled
 - [x] Transparent canvas
 - [x] Responsive renderer and camera (to canvas size)
+- [x] Animation Loop
+- [ ] FPS counter
+- [ ] Settings GUI
 
 ## Tech Stack
 
