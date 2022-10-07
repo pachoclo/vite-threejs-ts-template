@@ -8,9 +8,9 @@ No UI framework Three.js starter with the essentials.
   <img src="./doc/screenshot.png"  width="700"/>
 </div>
 
-## Three.js "elements" included
+## Stuff included
 
-- [x] Geometry (box/cube)
+- [x] Geometry
 - [x] Material
 - [x] Mesh
 - [x] Ambient Light
@@ -25,6 +25,7 @@ No UI framework Three.js starter with the essentials.
 - [x] Transparent canvas
 - [x] Responsive renderer and camera (to canvas size)
 - [x] Animation Loop
+- [x] Shadows
 - [ ] FPS counter
 - [ ] Settings GUI
 
@@ -59,8 +60,3 @@ Run build
 ```bash
 npm run preview
 ```
-
-## To be added soon
-
-- [ ] ESLint
-- [ ] Testing lib
