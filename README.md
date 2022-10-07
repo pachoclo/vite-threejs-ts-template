@@ -1,4 +1,4 @@
-# Three.js Vite Starter
+# Three.js Vite Template with TypeScript
 
 No UI framework Three.js starter with the essentials.
 
