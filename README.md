@@ -27,7 +27,7 @@ No UI framework Three.js starter with the essentials.
 - [x] Responsive renderer and camera (to canvas size)
 - [x] Animation Loop
 - [x] Shadows
-- [ ] FPS counter
+- [x] Stats (FPS, ms)
 - [ ] Settings GUI
 
 ## Tech Stack
