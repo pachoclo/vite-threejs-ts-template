@@ -2,10 +2,11 @@
 
 No UI framework Three.js starter with the essentials.
 
-[Jump to CLI commands](#cli-commands)
+- [Demo](https://vite-threejs-ts-template.vercel.app/)
+- [Jump to CLI commands](#cli-commands)
 
 <div style="text-align: center;">
-  <img src="./doc/screenshot.png"  width="700"/>
+  <img src="./doc/screenshot.png"  width="400"/>
 </div>
 
 ## Stuff included
