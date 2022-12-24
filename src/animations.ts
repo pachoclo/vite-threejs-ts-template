@@ -1,8 +1,8 @@
 import { Clock, Object3D } from 'three'
 
-function rotate(object: Object3D, clock: Clock, radiansPerSecond: number = Math.PI / 2) {
-  const rotationAngle = clock.getDelta() * radiansPerSecond
-  object.rotateY(rotationAngle)
+function rotate(object: Object3D, clock: Clock, radiansPerSecond: number = Math.PI * 2) {
+  const rotationAngle = clock.getElapsedTime() * radiansPerSecond
+  object.rotation.y = rotationAngle
 }
 
 function bounce(
