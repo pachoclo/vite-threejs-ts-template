@@ -1,5 +1,6 @@
 import {
   AmbientLight,
+  AmbientLightProbe,
   AxesHelper,
   BoxGeometry,
   Clock,
@@ -26,13 +27,11 @@ let canvas: HTMLElement
 let renderer: WebGLRenderer
 let scene: Scene
 let stats: Stats
+let ambientLight: AmbientLight
 let pointLight: PointLight
-let axesHelper: AxesHelper
 let cube: Mesh
 let camera: PerspectiveCamera
 let cameraControls: OrbitControls
-let pointLightHelper: PointLightHelper
-let gridHelper: GridHelper
 let clock: Clock
 
 init()
@@ -51,7 +50,7 @@ function init() {
 
   // ===== 💡 LIGHTS =====
   {
-    const ambientLight = new AmbientLight('white', 0.4)
+    ambientLight = new AmbientLight('white', 0.4)
     pointLight = new PointLight('#ffdca8', 1.2, 100)
     pointLight.position.set(-5, 3, 3)
     pointLight.castShadow = true
@@ -101,10 +100,9 @@ function init() {
 
   // ===== 🪄 HELPERS =====
   {
-    axesHelper = new AxesHelper(4)
-    pointLightHelper = new PointLightHelper(pointLight, undefined, 'orange')
-    pointLightHelper.visible = true
-    gridHelper = new GridHelper(20, 20, 'teal', 'darkgray')
+    const axesHelper = new AxesHelper(4)
+    const pointLightHelper = new PointLightHelper(pointLight, undefined, 'orange')
+    const gridHelper = new GridHelper(20, 20, 'teal', 'darkgray')
     gridHelper.position.y = -0.01
     scene.add(axesHelper)
     scene.add(pointLightHelper)
