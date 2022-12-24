@@ -39,12 +39,12 @@ animate()
 function init() {
   // ===== 🖼️ CANVAS, RENDERER, & SCENE =====
   {
-    scene = new Scene()
     canvas = document.querySelector(`canvas#${CANVAS_ID}`)!
     renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true })
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = PCFSoftShadowMap
+    scene = new Scene()
   }
 
   // ===== 💡 LIGHTS =====
@@ -86,14 +86,14 @@ function init() {
 
   // ===== 🎥 CAMERA =====
   {
-    camera = new PerspectiveCamera(50, 2, 0.1, 400)
+    camera = new PerspectiveCamera(50, 2, 0.1, 100)
     camera.position.set(3.5, 3, 5)
   }
 
   // ===== 🕹️ CONTROLS =====
   {
     cameraControls = new OrbitControls(camera, canvas)
-    cameraControls.target.set(cube.position.x, cube.position.y, cube.position.z)
+    cameraControls.target = cube.position.clone()
     cameraControls.update()
   }
 
