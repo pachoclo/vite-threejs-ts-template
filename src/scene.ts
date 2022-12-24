@@ -85,13 +85,13 @@ function init() {
     scene.add(plane)
   }
 
-  //  ===== 🎥 CAMERA =====
+  // ===== 🎥 CAMERA =====
   {
     camera = new PerspectiveCamera(50, 2, 0.1, 400)
     camera.position.set(3.5, 3, 5)
   }
 
-  //  ===== 🕹️ CONTROLS =====
+  // ===== 🕹️ CONTROLS =====
   {
     cameraControls = new OrbitControls(camera, canvas)
     cameraControls.target.set(cube.position.x, cube.position.y, cube.position.z)
