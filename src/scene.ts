@@ -1,6 +1,5 @@
 import {
   AmbientLight,
-  AmbientLightProbe,
   AxesHelper,
   BoxGeometry,
   Clock,
