@@ -1,5 +1,6 @@
 import {
   AmbientLight,
+  AxesHelper,
   BoxGeometry,
   Clock,
   GridHelper,
@@ -9,85 +10,113 @@ import {
   PerspectiveCamera,
   PlaneGeometry,
   PointLight,
+  PointLightHelper,
   Scene,
   WebGLRenderer,
 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import Stats from 'three/examples/jsm/libs/stats.module'
 import * as animations from './animations'
 import { resizeRendererToDisplaySize } from './helpers/responsiveness'
 import './style.css'
-import Stats from 'three/examples/jsm/libs/stats.module'
 
 const CANVAS_ID = 'scene'
 
-const cubeGeometry = new BoxGeometry(1, 1, 1)
-const cubeMaterial = new MeshLambertMaterial({ color: 'magenta' })
-const cube = new Mesh(cubeGeometry, cubeMaterial)
-
-const planeGeometry = new PlaneGeometry(3, 3)
-const planeMaterial = new MeshLambertMaterial({
-  color: 'gray',
-  emissive: 'teal',
-  emissiveIntensity: 0.2,
-  side: 2,
-})
-const plane = new Mesh(planeGeometry, planeMaterial)
-
-const grid = new GridHelper(20, 20, 'teal', 'darkgray')
-
-const ambientLight = new AmbientLight('white', 0.4)
-const pointLight = new PointLight('#ffdca8', 1.2, 100)
-
-const camera = new PerspectiveCamera(50, 2, 0.1, 200)
-
-const canvas: HTMLElement = document.querySelector(`canvas#${CANVAS_ID}`)!
-
-const cameraControls = new OrbitControls(camera, canvas)
-
-const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true })
-renderer.setPixelRatio(window.devicePixelRatio)
-
-const clock = new Clock()
-
-const scene = new Scene()
-
-const stats = Stats()
+let canvas: HTMLElement
+let renderer: WebGLRenderer
+let scene: Scene
+let stats: Stats
+let pointLight: PointLight
+let axesHelper: AxesHelper
+let cube: Mesh
+let camera: PerspectiveCamera
+let cameraControls: OrbitControls
+let pointLightHelper: PointLightHelper
+let gridHelper: GridHelper
+let clock: Clock
 
 init()
-
 animate()
 
 function init() {
-  // position and rotation
-  camera.position.set(3.5, 3, 5)
-  plane.rotateX(Math.PI / 2)
-  pointLight.position.set(-5, 3, 3)
+  // ===== 🖼️ CANVAS, RENDERER, & SCENE =====
+  {
+    scene = new Scene()
+    canvas = document.querySelector(`canvas#${CANVAS_ID}`)!
+    renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true })
+    renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = PCFSoftShadowMap
+  }
 
-  // shadows
-  renderer.shadowMap.enabled = true
-  renderer.shadowMap.type = PCFSoftShadowMap
-  pointLight.castShadow = true
-  pointLight.shadow.radius = 4
-  pointLight.shadow.camera.near = 0.1
-  pointLight.shadow.mapSize.width = 5000
-  pointLight.shadow.mapSize.height = 5000
-  cube.castShadow = true
-  plane.receiveShadow = true
+  // ===== 💡 LIGHTS =====
+  {
+    const ambientLight = new AmbientLight('white', 0.4)
+    pointLight = new PointLight('#ffdca8', 1.2, 100)
+    pointLight.position.set(-5, 3, 3)
+    pointLight.castShadow = true
+    pointLight.shadow.radius = 4
+    pointLight.shadow.camera.near = 0.1
+    pointLight.shadow.mapSize.width = 5000
+    pointLight.shadow.mapSize.height = 5000
+    scene.add(ambientLight)
+    scene.add(pointLight)
+  }
 
-  // add objects and lights to scene
-  scene.add(grid)
-  scene.add(plane)
-  scene.add(cube)
-  scene.add(ambientLight)
-  scene.add(pointLight)
+  // ===== 📦 OBJECTS =====
+  {
+    const sideLength = 1
+    const cubeGeometry = new BoxGeometry(sideLength, sideLength, sideLength)
+    const cubeMaterial = new MeshLambertMaterial({ color: 'magenta' })
+    cube = new Mesh(cubeGeometry, cubeMaterial)
+    cube.castShadow = true
 
-  // set the camera to look at the cube's starting position
-  const { x: ctrlTargetX, y: ctrlTargetY, z: ctrlTargetZ } = cube.position
-  cameraControls.target.set(ctrlTargetX, ctrlTargetY, ctrlTargetZ)
-  cameraControls.update()
+    const planeGeometry = new PlaneGeometry(3, 3)
+    const planeMaterial = new MeshLambertMaterial({
+      color: 'gray',
+      emissive: 'teal',
+      emissiveIntensity: 0.2,
+      side: 2,
+    })
+    const plane = new Mesh(planeGeometry, planeMaterial)
+    plane.rotateX(Math.PI / 2)
+    plane.receiveShadow = true
 
-  // stats
-  document.body.appendChild(stats.dom)
+    scene.add(cube)
+    scene.add(plane)
+  }
+
+  //  ===== 🎥 CAMERA =====
+  {
+    camera = new PerspectiveCamera(50, 2, 0.1, 400)
+    camera.position.set(3.5, 3, 5)
+  }
+
+  //  ===== 🕹️ CONTROLS =====
+  {
+    cameraControls = new OrbitControls(camera, canvas)
+    cameraControls.target.set(cube.position.x, cube.position.y, cube.position.z)
+    cameraControls.update()
+  }
+
+  // ===== 🪄 HELPERS =====
+  {
+    axesHelper = new AxesHelper(4)
+    pointLightHelper = new PointLightHelper(pointLight, undefined, 'orange')
+    pointLightHelper.visible = true
+    gridHelper = new GridHelper(20, 20, 'teal', 'darkgray')
+    gridHelper.position.y = -0.01
+    scene.add(axesHelper)
+    scene.add(pointLightHelper)
+    scene.add(gridHelper)
+  }
+
+  // ===== 📈 STATS & CLOCK =====
+  {
+    clock = new Clock()
+    stats = Stats()
+    document.body.appendChild(stats.dom)
+  }
 }
 
 function animate() {
@@ -99,8 +128,8 @@ function animate() {
   animations.rotate(cube, clock, Math.PI / 3)
   animations.bounce(cube, clock, 1, 0.5, 0.5)
 
-  // responsiveness
   if (resizeRendererToDisplaySize(renderer)) {
+    // responsiveness
     const canvas = renderer.domElement
     camera.aspect = canvas.clientWidth / canvas.clientHeight
     camera.updateProjectionMatrix()
