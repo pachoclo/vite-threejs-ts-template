@@ -15,6 +15,7 @@ import {
   WebGLRenderer,
 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { DragControls } from 'three/examples/jsm/controls/DragControls'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import * as animations from './animations'
 import { resizeRendererToDisplaySize } from './helpers/responsiveness'
@@ -32,6 +33,8 @@ let cube: Mesh
 let camera: PerspectiveCamera
 let cameraControls: OrbitControls
 let clock: Clock
+
+let playAnimation = true
 
 init()
 animate()
@@ -94,7 +97,26 @@ function init() {
   {
     cameraControls = new OrbitControls(camera, canvas)
     cameraControls.target = cube.position.clone()
+    cameraControls.enableDamping = true
     cameraControls.update()
+
+    const dragControls = new DragControls([cube], camera, renderer.domElement)
+    dragControls.addEventListener('dragstart', (event) => {
+      event.object.material.emissive.set('yellow')
+      cameraControls.enabled = false
+      playAnimation = false
+    })
+    dragControls.addEventListener('hoveron', (event) => {
+      event.object.material.emissive.set('orange')
+    })
+    dragControls.addEventListener('hoveroff', (event) => {
+      event.object.material.emissive.set(0x000000)
+    })
+    dragControls.addEventListener('dragend', (event) => {
+      event.object.material.emissive.set(0x000000)
+      cameraControls.enabled = true
+      playAnimation = true
+    })
   }
 
   // ===== 🪄 HELPERS =====
@@ -122,8 +144,10 @@ function animate() {
   stats.update()
 
   // animation
-  animations.rotate(cube, clock, Math.PI / 3)
-  animations.bounce(cube, clock, 1, 0.5, 0.5)
+  if (playAnimation) {
+    animations.rotate(cube, clock, Math.PI / 3)
+    animations.bounce(cube, clock, 1, 0.5, 0.5)
+  }
 
   if (resizeRendererToDisplaySize(renderer)) {
     // responsiveness
@@ -131,6 +155,8 @@ function animate() {
     camera.aspect = canvas.clientWidth / canvas.clientHeight
     camera.updateProjectionMatrix()
   }
+
+  cameraControls.update()
 
   renderer.render(scene, camera)
 }
