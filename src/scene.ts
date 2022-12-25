@@ -57,9 +57,10 @@ function init() {
     pointLight.position.set(-5, 3, 3)
     pointLight.castShadow = true
     pointLight.shadow.radius = 4
-    pointLight.shadow.camera.near = 0.1
-    pointLight.shadow.mapSize.width = 5000
-    pointLight.shadow.mapSize.height = 5000
+    pointLight.shadow.camera.near = 0.5
+    pointLight.shadow.camera.far = 4000
+    pointLight.shadow.mapSize.width = 2048
+    pointLight.shadow.mapSize.height = 2048
     scene.add(ambientLight)
     scene.add(pointLight)
   }
