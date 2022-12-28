@@ -37,7 +37,7 @@ let cameraControls: OrbitControls
 let clock: Clock
 let gui: GUI
 
-let playAnimation = true
+let animation = { play: true }
 
 init()
 animate()
@@ -108,7 +108,7 @@ function init() {
     dragControls.addEventListener('dragstart', (event) => {
       event.object.material.emissive.set('yellow')
       cameraControls.enabled = false
-      playAnimation = false
+      animation.play = false
     })
     dragControls.addEventListener('hoveron', (event) => {
       event.object.material.emissive.set('orange')
@@ -119,7 +119,7 @@ function init() {
     dragControls.addEventListener('dragend', (event) => {
       event.object.material.emissive.set(0x000000)
       cameraControls.enabled = true
-      playAnimation = true
+      animation.play = true
     })
 
     // Full screen
@@ -151,15 +151,21 @@ function init() {
   // ==== 🐞 DEBUG GUI ====
   {
     gui = new GUI({ title: '🐞 debug gui' })
+
     const cubeOneFolder = gui.addFolder('cube one')
+
     cubeOneFolder.add(cube.position, 'x').min(-5).max(5).step(0.5).name('pos x')
     cubeOneFolder.add(cube.position, 'y').min(-5).max(5).step(0.5).name('pos y')
     cubeOneFolder.add(cube.position, 'z').min(-5).max(5).step(0.5).name('pos z')
+
     cubeOneFolder.add(cube.material, 'wireframe')
     cubeOneFolder.addColor(cube.material, 'color')
+
     cubeOneFolder.add(cube.rotation, 'x', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate x')
     cubeOneFolder.add(cube.rotation, 'y', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate y')
     cubeOneFolder.add(cube.rotation, 'z', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate z')
+
+    cubeOneFolder.add(animation, 'play')
   }
 }
 
@@ -169,7 +175,7 @@ function animate() {
   stats.update()
 
   // animation
-  if (playAnimation) {
+  if (animation.play) {
     animations.rotate(cube, clock, Math.PI / 3)
     animations.bounce(cube, clock, 1, 0.5, 0.5)
   }
