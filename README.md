@@ -29,7 +29,7 @@ No UI framework Three.js starter with the essentials.
 - [x] Shadows
 - [x] Stats (FPS, ms)
 - [x] Full screen (double-click on canvas)
-- [ ] Settings GUI
+- [x] Debug GUI
 
 ## Tech Stack
 

@@ -21,6 +21,7 @@ import * as animations from './animations'
 import { resizeRendererToDisplaySize } from './helpers/responsiveness'
 import './style.css'
 import { toggleFullScreen } from './helpers/fullscreen'
+import GUI from 'lil-gui'
 
 const CANVAS_ID = 'scene'
 
@@ -34,6 +35,7 @@ let cube: Mesh
 let camera: PerspectiveCamera
 let cameraControls: OrbitControls
 let clock: Clock
+let gui: GUI
 
 let playAnimation = true
 
@@ -70,7 +72,7 @@ function init() {
   {
     const sideLength = 1
     const cubeGeometry = new BoxGeometry(sideLength, sideLength, sideLength)
-    const cubeMaterial = new MeshLambertMaterial({ color: 'magenta' })
+    const cubeMaterial = new MeshLambertMaterial({ color: '#f69f1f' })
     cube = new Mesh(cubeGeometry, cubeMaterial)
     cube.castShadow = true
 
@@ -144,6 +146,20 @@ function init() {
     clock = new Clock()
     stats = Stats()
     document.body.appendChild(stats.dom)
+  }
+
+  // ==== 🐞 DEBUG GUI ====
+  {
+    gui = new GUI({ title: '🐞 debug gui' })
+    const cubeOneFolder = gui.addFolder('cube one')
+    cubeOneFolder.add(cube.position, 'x').min(-5).max(5).step(0.5).name('pos x')
+    cubeOneFolder.add(cube.position, 'y').min(-5).max(5).step(0.5).name('pos y')
+    cubeOneFolder.add(cube.position, 'z').min(-5).max(5).step(0.5).name('pos z')
+    cubeOneFolder.add(cube.material, 'wireframe')
+    cubeOneFolder.addColor(cube.material, 'color')
+    cubeOneFolder.add(cube.rotation, 'x', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate x')
+    cubeOneFolder.add(cube.rotation, 'y', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate y')
+    cubeOneFolder.add(cube.rotation, 'z', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate z')
   }
 }
 
