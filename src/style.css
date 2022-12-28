@@ -4,17 +4,8 @@
   line-height: 24px;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
-
-  background: rgb(34, 193, 195);
-  background: linear-gradient(
-    0deg,
-    rgb(8, 163, 166) 0%,
-    rgba(79, 166, 167, 0.849) 8%,
-    rgba(61, 79, 94, 0.885) 40%,
-    rgb(17, 19, 23)
-  );
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -37,6 +28,16 @@ html {
 canvas {
   height: 100%;
   width: 100%;
+  outline: none;
+
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    0deg,
+    rgb(8, 163, 166) 0%,
+    rgba(79, 166, 167, 0.849) 8%,
+    rgba(61, 79, 94, 0.885) 40%,
+    rgb(17, 19, 23)
+  );
 }
 
 h1 {
