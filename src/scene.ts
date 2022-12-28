@@ -45,7 +45,7 @@ function init() {
   {
     canvas = document.querySelector(`canvas#${CANVAS_ID}`)!
     renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true })
-    renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = PCFSoftShadowMap
     scene = new Scene()
