@@ -91,7 +91,7 @@ function init() {
 
   // ===== 🎥 CAMERA =====
   {
-    camera = new PerspectiveCamera(50, 2, 0.1, 100)
+    camera = new PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 100)
     camera.position.set(3.5, 3, 5)
   }
 
