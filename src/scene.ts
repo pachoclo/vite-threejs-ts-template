@@ -20,6 +20,7 @@ import Stats from 'three/examples/jsm/libs/stats.module'
 import * as animations from './animations'
 import { resizeRendererToDisplaySize } from './helpers/responsiveness'
 import './style.css'
+import { toggleFullScreen } from './helpers/fullscreen'
 
 const CANVAS_ID = 'scene'
 
@@ -117,6 +118,13 @@ function init() {
       event.object.material.emissive.set(0x000000)
       cameraControls.enabled = true
       playAnimation = true
+    })
+
+    // Full screen
+    window.addEventListener('dblclick', (event) => {
+      if (event.target === canvas) {
+        toggleFullScreen(canvas)
+      }
     })
   }
 
