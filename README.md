@@ -1,6 +1,6 @@
 # Three.js Vite Template with TypeScript
 
-No UI framework Three.js starter with the essentials.
+Three.js + Vite + TypeScript starter
 
 - [Demo](https://vite-threejs-ts-template.vercel.app/)
 - [Jump to CLI commands](#cli-commands)
@@ -9,7 +9,7 @@ No UI framework Three.js starter with the essentials.
   <img src="./doc/screenshot.png"  width="400"/>
 </div>
 
-## Stuff included
+## Stuff included in the `scene.ts`
 
 - [x] Geometry
 - [x] Material
@@ -20,7 +20,9 @@ No UI framework Three.js starter with the essentials.
 - [x] Scene
 - [x] Canvas
 - [x] Renderer (WebGL)
+- [x] Loading Manager
 - [x] Orbit Controls
+- [x] Drag Controls
 - [x] Grid
 - [x] Antialias enabled
 - [x] Transparent canvas
