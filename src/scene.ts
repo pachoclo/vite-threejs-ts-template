@@ -203,7 +203,6 @@ function init() {
     cubeOneFolder.addColor(cube.material, 'color')
     cubeOneFolder.add(cube.material, 'metalness', 0, 1, 0.1)
     cubeOneFolder.add(cube.material, 'roughness', 0, 1, 0.1)
-    cubeOneFolder.add(cube.material, 'shine', 0, 1, 0.1)
 
     cubeOneFolder.add(cube.rotation, 'x', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate x')
     cubeOneFolder.add(cube.rotation, 'y', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate y')
