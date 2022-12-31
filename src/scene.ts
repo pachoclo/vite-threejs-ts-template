@@ -4,6 +4,7 @@ import {
   BoxGeometry,
   Clock,
   GridHelper,
+  LoadingManager,
   Mesh,
   MeshLambertMaterial,
   PCFSoftShadowMap,
@@ -28,13 +29,14 @@ const CANVAS_ID = 'scene'
 let canvas: HTMLElement
 let renderer: WebGLRenderer
 let scene: Scene
-let stats: Stats
+let loadingManager: LoadingManager
 let ambientLight: AmbientLight
 let pointLight: PointLight
 let cube: Mesh
 let camera: PerspectiveCamera
 let cameraControls: OrbitControls
 let clock: Clock
+let stats: Stats
 let gui: GUI
 
 let animation = { play: true }
@@ -51,6 +53,25 @@ function init() {
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = PCFSoftShadowMap
     scene = new Scene()
+  }
+
+  // ===== 👨🏻‍💼 LOADING MANAGER =====
+  {
+    loadingManager = new LoadingManager()
+
+    loadingManager.onStart = () => {
+      console.log('loading started')
+    }
+    loadingManager.onProgress = (url, loaded, total) => {
+      console.log('loading in progress:')
+      console.log(`${url} -> ${loaded} / ${total}`)
+    }
+    loadingManager.onLoad = () => {
+      console.log('loaded!')
+    }
+    loadingManager.onError = () => {
+      console.log('❌ error while loading')
+    }
   }
 
   // ===== 💡 LIGHTS =====
