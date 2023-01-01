@@ -43,7 +43,7 @@ let clock: Clock
 let stats: Stats
 let gui: GUI
 
-const animation = { enabled: true, play: true }
+const animation = { enabled: false, play: true }
 
 init()
 animate()
@@ -82,7 +82,7 @@ function init() {
   {
     ambientLight = new AmbientLight('white', 0.4)
     pointLight = new PointLight('#ffdca8', 1.2, 100)
-    pointLight.position.set(-5, 3, 3)
+    pointLight.position.set(-2, 3, 3)
     pointLight.castShadow = true
     pointLight.shadow.radius = 4
     pointLight.shadow.camera.near = 0.5
@@ -104,6 +104,7 @@ function init() {
     })
     cube = new Mesh(cubeGeometry, cubeMaterial)
     cube.castShadow = true
+    cube.position.y = 0.5
 
     const planeGeometry = new PlaneGeometry(3, 3)
     const planeMaterial = new MeshLambertMaterial({
@@ -170,7 +171,7 @@ function init() {
   // ===== 🪄 HELPERS =====
   {
     axesHelper = new AxesHelper(4)
-    axesHelper.visible = true
+    axesHelper.visible = false
     scene.add(axesHelper)
 
     pointLightHelper = new PointLightHelper(pointLight, undefined, 'orange')
@@ -239,7 +240,6 @@ function animate() {
   }
 
   if (resizeRendererToDisplaySize(renderer)) {
-    // responsiveness
     const canvas = renderer.domElement
     camera.aspect = canvas.clientWidth / canvas.clientHeight
     camera.updateProjectionMatrix()
