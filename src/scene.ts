@@ -225,6 +225,16 @@ function init() {
     const cameraFolder = gui.addFolder('Camera')
     cameraFolder.add(cameraControls, 'autoRotate')
 
+    // persist GUI state in local storage on changes
+    gui.onFinishChange(() => {
+      const guiState = gui.save()
+      localStorage.setItem('guiState', JSON.stringify(guiState))
+    })
+
+    // load GUI state if available in local storage
+    const guiState = localStorage.getItem('guiState')
+    if (guiState) gui.load(JSON.parse(guiState))
+
     gui.close()
   }
 }
