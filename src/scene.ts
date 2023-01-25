@@ -235,6 +235,13 @@ function init() {
     const guiState = localStorage.getItem('guiState')
     if (guiState) gui.load(JSON.parse(guiState))
 
+    // reset GUI state button
+    const resetGui = () => {
+      localStorage.removeItem('guiState')
+      gui.reset()
+    }
+    gui.add({ resetGui }, 'resetGui').name('RESET')
+
     gui.close()
   }
 }
