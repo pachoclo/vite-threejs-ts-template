@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/three": "^0.155.0",
+    "@types/three": "^0.157.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"
   },
