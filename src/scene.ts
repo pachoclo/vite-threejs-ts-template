@@ -43,7 +43,7 @@ let clock: Clock
 let stats: Stats
 let gui: GUI
 
-const animation = { enabled: false, play: true }
+const animation = { enabled: true, play: true }
 
 init()
 animate()
