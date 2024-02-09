@@ -81,8 +81,8 @@ function init() {
   // ===== 💡 LIGHTS =====
   {
     ambientLight = new AmbientLight('white', 0.4)
-    pointLight = new PointLight('#ffdca8', 1.2, 100)
-    pointLight.position.set(-2, 3, 3)
+    pointLight = new PointLight('white', 20, 100)
+    pointLight.position.set(-2, 2, 2)
     pointLight.castShadow = true
     pointLight.shadow.radius = 4
     pointLight.shadow.camera.near = 0.5
@@ -139,24 +139,32 @@ function init() {
 
     dragControls = new DragControls([cube], camera, renderer.domElement)
     dragControls.addEventListener('hoveron', (event) => {
-      event.object.material.emissive.set('orange')
+      const mesh = event.object as Mesh
+      const material = mesh.material as MeshStandardMaterial
+      material.emissive.set('orange')
     })
     dragControls.addEventListener('hoveroff', (event) => {
-      event.object.material.emissive.set('black')
+      const mesh = event.object as Mesh
+      const material = mesh.material as MeshStandardMaterial
+      material.emissive.set('black')
     })
     dragControls.addEventListener('dragstart', (event) => {
+      const mesh = event.object as Mesh
+      const material = mesh.material as MeshStandardMaterial
       cameraControls.enabled = false
       animation.play = false
-      event.object.material.emissive.set('black')
-      event.object.material.opacity = 0.7
-      event.object.material.needsUpdate = true
+      material.emissive.set('black')
+      material.opacity = 0.7
+      material.needsUpdate = true
     })
     dragControls.addEventListener('dragend', (event) => {
       cameraControls.enabled = true
       animation.play = true
-      event.object.material.emissive.set('black')
-      event.object.material.opacity = 1
-      event.object.material.needsUpdate = true
+      const mesh = event.object as Mesh
+      const material = mesh.material as MeshStandardMaterial
+      material.emissive.set('black')
+      material.opacity = 1
+      material.needsUpdate = true
     })
     dragControls.enabled = false
 
@@ -205,9 +213,15 @@ function init() {
     cubeOneFolder.add(cube.material, 'metalness', 0, 1, 0.1)
     cubeOneFolder.add(cube.material, 'roughness', 0, 1, 0.1)
 
-    cubeOneFolder.add(cube.rotation, 'x', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate x')
-    cubeOneFolder.add(cube.rotation, 'y', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate y')
-    cubeOneFolder.add(cube.rotation, 'z', -Math.PI * 2, Math.PI * 2, Math.PI / 4).name('rotate z')
+    cubeOneFolder
+      .add(cube.rotation, 'x', -Math.PI * 2, Math.PI * 2, Math.PI / 4)
+      .name('rotate x')
+    cubeOneFolder
+      .add(cube.rotation, 'y', -Math.PI * 2, Math.PI * 2, Math.PI / 4)
+      .name('rotate y')
+    cubeOneFolder
+      .add(cube.rotation, 'z', -Math.PI * 2, Math.PI * 2, Math.PI / 4)
+      .name('rotate z')
 
     cubeOneFolder.add(animation, 'enabled').name('animated')
 
