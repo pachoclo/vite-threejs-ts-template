@@ -1,4 +1,6 @@
-export function resizeRendererToDisplaySize(renderer: THREE.WebGLRenderer) {
+import { WebGLRenderer } from 'three'
+
+export function resizeRendererToDisplaySize(renderer: WebGLRenderer) {
   const canvas = renderer.domElement
   const width = canvas.clientWidth
   const height = canvas.clientHeight
