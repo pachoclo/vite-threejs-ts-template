@@ -205,7 +205,14 @@ function init() {
     const cubeOneFolder = gui.addFolder('Cube one')
 
     cubeOneFolder.add(cube.position, 'x').min(-5).max(5).step(0.5).name('pos x')
-    cubeOneFolder.add(cube.position, 'y').min(-5).max(5).step(0.5).name('pos y')
+    cubeOneFolder
+      .add(cube.position, 'y')
+      .min(-5)
+      .max(5)
+      .step(1)
+      .name('pos y')
+      .onChange(() => (animation.play = false))
+      .onFinishChange(() => (animation.play = true))
     cubeOneFolder.add(cube.position, 'z').min(-5).max(5).step(0.5).name('pos z')
 
     cubeOneFolder.add(cube.material, 'wireframe')
@@ -219,6 +226,8 @@ function init() {
     cubeOneFolder
       .add(cube.rotation, 'y', -Math.PI * 2, Math.PI * 2, Math.PI / 4)
       .name('rotate y')
+      .onChange(() => (animation.play = false))
+      .onFinishChange(() => (animation.play = true))
     cubeOneFolder
       .add(cube.rotation, 'z', -Math.PI * 2, Math.PI * 2, Math.PI / 4)
       .name('rotate z')
