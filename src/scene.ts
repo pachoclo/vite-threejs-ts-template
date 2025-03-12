@@ -215,10 +215,10 @@ function init() {
       .onFinishChange(() => (animation.play = true))
     cubeOneFolder.add(cube.position, 'z').min(-5).max(5).step(0.5).name('pos z')
 
-    cubeOneFolder.add(cube.material, 'wireframe')
-    cubeOneFolder.addColor(cube.material, 'color')
-    cubeOneFolder.add(cube.material, 'metalness', 0, 1, 0.1)
-    cubeOneFolder.add(cube.material, 'roughness', 0, 1, 0.1)
+    cubeOneFolder.add(cube.material as MeshStandardMaterial, 'wireframe')
+    cubeOneFolder.addColor(cube.material as MeshStandardMaterial, 'color')
+    cubeOneFolder.add(cube.material as MeshStandardMaterial, 'metalness', 0, 1, 0.1)
+    cubeOneFolder.add(cube.material as MeshStandardMaterial, 'roughness', 0, 1, 0.1)
 
     cubeOneFolder
       .add(cube.rotation, 'x', -Math.PI * 2, Math.PI * 2, Math.PI / 4)
