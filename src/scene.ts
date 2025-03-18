@@ -19,7 +19,7 @@ import {
 } from 'three'
 import { DragControls } from 'three/addons/controls/DragControls.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import Stats from 'three/examples/jsm/libs/stats.module'
+import Stats from 'stats.js'
 import * as animations from './helpers/animations'
 import { toggleFullScreen } from './helpers/fullscreen'
 import { resizeRendererToDisplaySize } from './helpers/responsiveness'
