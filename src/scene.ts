@@ -272,8 +272,7 @@ function init() {
 function animate() {
   requestAnimationFrame(animate)
 
-  stats.update()
-
+  stats.begin()
   if (animation.enabled && animation.play) {
     animations.rotate(cube, clock, Math.PI / 3)
     animations.bounce(cube, clock, 1, 0.5, 0.5)
@@ -284,8 +283,7 @@ function animate() {
     camera.aspect = canvas.clientWidth / canvas.clientHeight
     camera.updateProjectionMatrix()
   }
-
   cameraControls.update()
-
   renderer.render(scene, camera)
+  stats.end()
 }
