@@ -85,8 +85,8 @@ function init() {
     pointLight.position.set(-2, 2, 2)
     pointLight.castShadow = true
     pointLight.shadow.radius = 4
-    pointLight.shadow.camera.near = 0.5
-    pointLight.shadow.camera.far = 4000
+    pointLight.shadow.camera.near = 0.1
+    pointLight.shadow.camera.far = 1000
     pointLight.shadow.mapSize.width = 2048
     pointLight.shadow.mapSize.height = 2048
     scene.add(ambientLight)
@@ -125,7 +125,7 @@ function init() {
 
   // ===== 🎥 CAMERA =====
   {
-    camera = new PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 100)
+    camera = new PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000)
     camera.position.set(2, 2, 5)
   }
 
