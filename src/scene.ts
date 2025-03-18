@@ -141,7 +141,7 @@ function init() {
     dragControls.addEventListener('hoveron', (event) => {
       const mesh = event.object as Mesh
       const material = mesh.material as MeshStandardMaterial
-      material.emissive.set('orange')
+      material.emissive.set('green')
     })
     dragControls.addEventListener('hoveroff', (event) => {
       const mesh = event.object as Mesh
@@ -153,7 +153,7 @@ function init() {
       const material = mesh.material as MeshStandardMaterial
       cameraControls.enabled = false
       animation.play = false
-      material.emissive.set('black')
+      material.emissive.set('orange')
       material.opacity = 0.7
       material.needsUpdate = true
     })
