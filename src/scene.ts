@@ -283,7 +283,9 @@ function animate() {
     camera.aspect = canvas.clientWidth / canvas.clientHeight
     camera.updateProjectionMatrix()
   }
+
   cameraControls.update()
+
   renderer.render(scene, camera)
   stats.end()
 }
