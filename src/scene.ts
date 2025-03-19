@@ -17,9 +17,9 @@ import {
   Scene,
   WebGLRenderer,
 } from 'three'
-import { DragControls } from 'three/examples/jsm/controls/DragControls'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import Stats from 'three/examples/jsm/libs/stats.module'
+import { DragControls } from 'three/addons/controls/DragControls.js'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import Stats from 'stats.js'
 import * as animations from './helpers/animations'
 import { toggleFullScreen } from './helpers/fullscreen'
 import { resizeRendererToDisplaySize } from './helpers/responsiveness'
@@ -85,8 +85,8 @@ function init() {
     pointLight.position.set(-2, 2, 2)
     pointLight.castShadow = true
     pointLight.shadow.radius = 4
-    pointLight.shadow.camera.near = 0.5
-    pointLight.shadow.camera.far = 4000
+    pointLight.shadow.camera.near = 0.1
+    pointLight.shadow.camera.far = 1000
     pointLight.shadow.mapSize.width = 2048
     pointLight.shadow.mapSize.height = 2048
     scene.add(ambientLight)
@@ -125,7 +125,7 @@ function init() {
 
   // ===== 🎥 CAMERA =====
   {
-    camera = new PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 100)
+    camera = new PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000)
     camera.position.set(2, 2, 5)
   }
 
@@ -141,7 +141,7 @@ function init() {
     dragControls.addEventListener('hoveron', (event) => {
       const mesh = event.object as Mesh
       const material = mesh.material as MeshStandardMaterial
-      material.emissive.set('orange')
+      material.emissive.set('green')
     })
     dragControls.addEventListener('hoveroff', (event) => {
       const mesh = event.object as Mesh
@@ -153,7 +153,7 @@ function init() {
       const material = mesh.material as MeshStandardMaterial
       cameraControls.enabled = false
       animation.play = false
-      material.emissive.set('black')
+      material.emissive.set('orange')
       material.opacity = 0.7
       material.needsUpdate = true
     })
@@ -213,8 +213,8 @@ function init() {
       .name('pos y')
       .onChange(() => (animation.play = false))
       .onFinishChange(() => (animation.play = true))
-
     cubeOneFolder.add(cube.position, 'z').min(-5).max(5).step(0.5).name('pos z')
+
     cubeOneFolder.add(cube.material as MeshStandardMaterial, 'wireframe')
     cubeOneFolder.addColor(cube.material as MeshStandardMaterial, 'color')
     cubeOneFolder.add(cube.material as MeshStandardMaterial, 'metalness', 0, 1, 0.1)
@@ -272,8 +272,7 @@ function init() {
 function animate() {
   requestAnimationFrame(animate)
 
-  stats.update()
-
+  stats.begin()
   if (animation.enabled && animation.play) {
     animations.rotate(cube, clock, Math.PI / 3)
     animations.bounce(cube, clock, 1, 0.5, 0.5)
@@ -288,4 +287,5 @@ function animate() {
   cameraControls.update()
 
   renderer.render(scene, camera)
+  stats.end()
 }

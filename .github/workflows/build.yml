@@ -1,0 +1,25 @@
+# ref: https://github.com/actions/runner-images
+name: Build
+
+on: [push, pull_request, workflow_dispatch]
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+# Building using the github runner environement directly.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Configure vite
+        run: |
+          echo 'export default {
+            base: "/${{github.event.repository.name}}/"
+          }' > vite.config.js
+      - name: Build project
+        run: npm run build
